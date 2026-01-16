@@ -1,27 +1,363 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Aplikasi Kalkulator Waris Islam</title>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+      :root {
+        --primary-green: #2c5f2d;
+        --secondary-green: #97bc62;
+        --light-green: #e9f5db;
+        --gold: #b8860b;
+      }
+      
+      body {
+        background-color: #f8f9fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #333;
+        line-height: 1.6;
+        padding-bottom: 2rem;
+      }
+      
+      .app-header {
+        background: linear-gradient(135deg, var(--primary-green), #3e8c40);
+        color: white;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        border-radius: 0 0 20px 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      
+      .app-header h1 {
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        font-size: 2.2rem;
+      }
+      
+      .app-header .subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      
+      .input-section {
+        background-color: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        margin-bottom: 2rem;
+      }
+      
+      .section-title {
+        color: var(--primary-green);
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid var(--light-green);
+      }
+      
+      .input-group-custom {
+        margin-bottom: 1.5rem;
+      }
+      
+      .input-group-custom label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: #555;
+      }
+      
+      .input-group-custom input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s;
+      }
+      
+      .input-group-custom input:focus {
+        outline: none;
+        border-color: var(--secondary-green);
+        box-shadow: 0 0 0 3px rgba(151, 188, 98, 0.2);
+      }
+      
+      .input-group-custom .input-hint {
+        font-size: 0.85rem;
+        color: #777;
+        margin-top: 0.25rem;
+      }
+      
+      .input-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .input-col {
+        flex: 1;
+        min-width: 200px;
+      }
+      
+      .heir-category {
+        background-color: var(--light-green);
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .heir-category h4 {
+        color: var(--primary-green);
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+      }
+      
+      .heir-category h4 i {
+        margin-right: 0.5rem;
+      }
+      
+      .btn-calculate {
+        background: linear-gradient(to right, var(--primary-green), var(--secondary-green));
+        color: white;
+        border: none;
+        padding: 0.9rem 2.5rem;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: block;
+        margin: 2rem auto 0;
+        width: 100%;
+        max-width: 300px;
+      }
+      
+      .btn-calculate:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 7px 15px rgba(44, 95, 45, 0.3);
+      }
+      
+      .result-section {
+        background-color: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        margin-top: 2rem;
+      }
+      
+      .result-title {
+        color: var(--primary-green);
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+      }
+      
+      #hasil {
+        width: 100%;
+        min-height: 250px;
+        padding: 1.5rem;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        font-family: 'Courier New', monospace;
+        font-size: 1rem;
+        line-height: 1.5;
+        background-color: #f9f9f9;
+        resize: vertical;
+      }
+      
+      .total-asset-box {
+        background-color: #fff8e1;
+        border: 2px dashed var(--gold);
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+      
+      .total-asset-box label {
+        font-weight: 600;
+        color: #8a6d3b;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+      
+      .total-asset-box input {
+        font-size: 1.2rem;
+        font-weight: 600;
+        text-align: center;
+        color: var(--primary-green);
+        background-color: transparent;
+        border: none;
+        width: 100%;
+      }
+      
+      .info-note {
+        background-color: #e8f4f8;
+        border-left: 4px solid #17a2b8;
+        padding: 1.25rem;
+        border-radius: 0 8px 8px 0;
+        margin-top: 2rem;
+      }
+      
+      .info-note h5 {
+        color: #0c5460;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+      
+      .footer-note {
+        text-align: center;
+        color: #666;
+        font-size: 0.9rem;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #eee;
+      }
+      
+      @media (max-width: 768px) {
+        .app-header {
+          padding: 1.5rem 0;
+        }
+        
+        .app-header h1 {
+          font-size: 1.8rem;
+        }
+        
+        .input-section, .result-section {
+          padding: 1.5rem;
+        }
+        
+        .input-col {
+          min-width: 100%;
+        }
+        
+        .heir-category {
+          padding: 1.25rem;
+        }
+      }
+    </style>
   </head>
   <body>
-    <h1>Aplikasi Waris</h1>
-    <section class="input-section">
-        <input type="number" id="harta" placeholder="Total Harta">
-    <input type="number" id="anakLaki" placeholder="Anak Laki-laki">
-    <input type="number" id="anakPerempuan" placeholder="Anak Perempuan">
-    <button onclick="hitung()">Hitung Waris</button>
-    </section>
-     <section class="result-section">
-        <p id="hasil"></p>
-    </section>
-
-    <script src="index.js"></script>
+    <!-- Header -->
+    <header class="app-header text-center">
+      <div class="container">
+        <h1><i class="bi bi-calculator-fill"></i> Kalkulator Waris Islam</h1>
+        <p class="subtitle">Menghitung pembagian warisan sesuai hukum Faraid berdasarkan Al-Qur'an dan As-Sunnah</p>
+      </div>
+    </header>
+    
+    <main class="container">
+      <!-- Input Section -->
+      <section class="input-section">
+        <h2 class="section-title text-center">Data Ahli Waris</h2>
+        
+        <!-- Total Harta -->
+        <div class="total-asset-box">
+          <label for="harta">TOTAL HARTA WARISAN (Rp)</label>
+          <input type="number" id="harta" placeholder="Contoh: 100000000" background-color="#fff8e1">
+          <p class="input-hint">Masukkan jumlah harta bersih setelah dikurangi hutang, wasiat, dan biaya pemakaman</p>
+        </div>
+        
+        <!-- Kategori: Pasangan -->
+        <div class="heir-category">
+          <h4><i class="bi bi-heart-fill"></i> Pasangan</h4>
+          <div class="input-row">
+            <div class="input-col">
+              <div class="input-group-custom">
+                <label for="suami">Suami (0 atau 1)</label>
+                <input type="number" id="suami" placeholder="0 atau 1" min="0" max="1" value="0">
+                <p class="input-hint">Isi 1 jika suami masih hidup dan berhak mewarisi</p>
+              </div>
+            </div>
+            <div class="input-col">
+              <div class="input-group-custom">
+                <label for="istri">Jumlah Istri (0-4)</label>
+                <input type="number" id="istri" placeholder="0, 1, 2, 3, atau 4" min="0" max="4" value="1">
+                <p class="input-hint">Maksimal 4 istri sesuai hukum Islam</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Kategori: Orang Tua -->
+        <div class="heir-category">
+          <h4><i class="bi bi-people-fill"></i> Orang Tua</h4>
+          <div class="input-row">
+            <div class="input-col">
+              <div class="input-group-custom">
+                <label for="ayah">Ayah (0 atau 1)</label>
+                <input type="number" id="ayah" placeholder="0 atau 1" min="0" max="1" value="1">
+                <p class="input-hint">Isi 1 jika ayah masih hidup dan berhak mewarisi</p>
+              </div>
+            </div>
+            <div class="input-col">
+              <div class="input-group-custom">
+                <label for="ibu">Ibu (0 atau 1)</label>
+                <input type="number" id="ibu" placeholder="0 atau 1" min="0" max="1" value="1">
+                <p class="input-hint">Isi 1 jika ibu masih hidup dan berhak mewarisi</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Kategori: Anak -->
+        <div class="heir-category">
+          <h4><i class="bi bi-person-vcard-fill"></i> Anak</h4>
+          <div class="input-row">
+            <div class="input-col">
+              <div class="input-group-custom">
+                <label for="anakLaki">Jumlah Anak Laki-laki</label>
+                <input type="number" id="anakLaki" placeholder="0, 1, 2, ..." min="0" value="1">
+                <p class="input-hint">Anak kandung laki-laki yang masih hidup</p>
+              </div>
+            </div>
+            <div class="input-col">
+              <div class="input-group-custom">
+                <label for="anakPerempuan">Jumlah Anak Perempuan</label>
+                <input type="number" id="anakPerempuan" placeholder="0, 1, 2, ..." min="0" value="1">
+                <p class="input-hint">Anak kandung perempuan yang masih hidup</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Tombol Hitung -->
+        <button class="btn-calculate" onclick="hitung()" href="#hasilSemua">
+          <i class="bi bi-calculator-fill"></i> Hitung Pembagian Waris
+        </button>
+        
+         <!-- Informasi Penting -->
+        <div class="info-note">
+          <h5><i class="bi bi-info-circle-fill"></i> Informasi Penting tentang Bagian Istri:</h5>
+          <p>Dalam hukum waris Islam, istri mendapat <strong>1/4 jika suami tidak memiliki anak</strong>, dan <strong>1/8 jika suami memiliki anak</strong>. Jika istri lebih dari satu, bagian tersebut dibagi rata di antara mereka.</p>
+        </div>
+      </section>
+      
+      <!-- Result Section -->
+      <section class="result-section" id="hasilSemua">
+        <h2 class="result-title text-center" >Hasil Perhitungan Waris</h2>
+        <textarea id="hasil" rows="10" cols="50" readonly placeholder="Hasil perhitungan akan muncul di sini..."></textarea>
+        
+        <div class="footer-note">
+          <p><i class="bi bi-lightbulb-fill"></i> Aplikasi ini menggunakan perhitungan berdasarkan hukum waris Islam (Faraid). Hasil perhitungan ini bersifat informatif dan untuk kasus kompleks disarankan berkonsultasi dengan ahli faraid.</p>
+          <p class="mt-2">"Allah mensyari'atkan bagimu tentang (pembagian pusaka untuk) anak-anakmu." (QS. An-Nisa': 11)</p>
+        </div>
+      </section>
+    </main>
+    
+    <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
-</body>
+    
+    <!-- JavaScript Anda (pasti sudah ada) -->
+    <script src="index.js"></script>
+  </body>
 </html>
